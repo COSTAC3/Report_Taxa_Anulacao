@@ -1,13 +1,13 @@
-# Instalar e carregar os pacotes necessários
+# Packages Necessários
 
 library(readxl)
 library(writexl)
 
 # Diretório e nome do ficheiro original
-input_file <- "C:/Users/COSTAC3/Desktop/Teste_Anulações/Report_Taxa_anulacao_Cognos.xlsx"
+input_file <- "Z:/MARKET PRICING E ATUARIADO DE PRODUTO/REPORTS/RADAR MAPFRE PBI/Taxa Anulações/Report_Taxa_anulacao_Cognos_V1.xlsx"
 
 # Diretório e nome do ficheiro modificado
-output_file <- "C:/Users/COSTAC3/Desktop/Teste_Anulações/REPORT_TAXAS_ANULACOES.xlsx"
+output_file <- "Z:/MARKET PRICING E ATUARIADO DE PRODUTO/REPORTS/RADAR MAPFRE PBI/Taxa Anulações/REPORT_TAXAS_ANULACOES.xlsx"
 
 # Verificar se o arquivo original existe
 if (!file.exists(input_file)) {
@@ -74,11 +74,12 @@ if (nrow(data) > 8) {
 # Remover a última coluna da tabela
 data <- data[, -ncol(data)]
 
-# Adicionar o cabeçalho especificado
-colnames(data) <- c("Ano", "Data", "Produto", "Cliente", "Canal Distribuição", "Integralidade", "Apolices Emitidas", "Apolices Anuladas", "Apolices Vigentes")
+# Adicionar o cabeçalho especifica
+colnames(data) <- c( "Data", "Produto", "Cliente", "Integralidade", "Canal Distribuição", "Tipo Agente",  "Apolices Emitidas", "Apolices Anuladas", "Apolices Vigentes")
 
 
 #Algumas alterações
+
 # 1º - Alterar as últimas 3 colunas para formato numérico com separador decimal como vírgula
 data[, c("Apolices Emitidas", "Apolices Anuladas", "Apolices Vigentes")] <- lapply(data[, c("Apolices Emitidas", "Apolices Anuladas", "Apolices Vigentes")], function(col) {
   as.numeric(as.character(col))
@@ -88,22 +89,39 @@ data[, c("Apolices Emitidas", "Apolices Anuladas", "Apolices Vigentes")] <- lapp
 data$Produto <- gsub("^\\d+-", "", data$Produto)
 data$`Canal Distribuição` <- gsub("^\\d+-", "", data$`Canal Distribuição`)
 
-# 3º - Adicionar uma nova coluna "num_mes" depois da coluna "Data"
-data$Mes <- gsub("^\\d{4}/Jan$", "Janeiro",
-                gsub("^\\d{4}/Feb$", "Fevereiro",
-                gsub("^\\d{4}/Mar$", "Março",
-                gsub("^\\d{4}/Apr$", "Abril",
-                gsub("^\\d{4}/May$", "Maio",
-                gsub("^\\d{4}/Jun$", "Junho",
-                gsub("^\\d{4}/Jul$", "Julho",
-                gsub("^\\d{4}/Aug$", "Agosto",
-                gsub("^\\d{4}/Sep$", "Setembro",
-                gsub("^\\d{4}/Oct$", "Outubro",
-                gsub("^\\d{4}/Nov$", "Novembro",
-                gsub("^\\d{4}/Dec$", "Dezembro", data$Data))))))))))))
+# 3º - Adicionar uma nova coluna "NUM_MES" depois da coluna "Data"
+data$MES <- gsub("^\\d{4}/Jan$", "Janeiro",
+            gsub("^\\d{4}/Feb$", "Fevereiro",
+            gsub("^\\d{4}/Mar$", "Março",
+            gsub("^\\d{4}/Apr$", "Abril",
+            gsub("^\\d{4}/May$", "Maio",
+            gsub("^\\d{4}/Jun$", "Junho",
+            gsub("^\\d{4}/Jul$", "Julho",
+            gsub("^\\d{4}/Aug$", "Agosto",
+            gsub("^\\d{4}/Sep$", "Setembro",
+            gsub("^\\d{4}/Oct$", "Outubro",
+            gsub("^\\d{4}/Nov$", "Novembro",
+            gsub("^\\d{4}/Dec$", "Dezembro", data$Data))))))))))))
+
+# 3º - Adicionar uma nova coluna "NUM_MES" depois da coluna "Data"
+data$NUM_MES <- gsub("^\\d{4}/Jan$", 1,
+            gsub("^\\d{4}/Feb$", 2,
+            gsub("^\\d{4}/Mar$", 3,
+            gsub("^\\d{4}/Apr$", 4,
+            gsub("^\\d{4}/May$", 5,
+            gsub("^\\d{4}/Jun$", 6,
+            gsub("^\\d{4}/Jul$", 7,
+            gsub("^\\d{4}/Aug$", 8,
+            gsub("^\\d{4}/Sep$", 9,
+            gsub("^\\d{4}/Oct$", 10,
+            gsub("^\\d{4}/Nov$", 11,
+            gsub("^\\d{4}/Dec$", 12, data$Data))))))))))))
+
+# 4º - Adicionar uma nova coluna "ANO" depois da coluna "Data"
+data$ANO <- substr(data$Data, 1, 4)
 
 # Reordenar as colunas 
-data <- data[, c("Ano", "Data", "Produto", "Cliente", "Canal Distribuição", "Integralidade", "Apolices Emitidas", "Apolices Anuladas", "Apolices Vigentes")]
+data <- data[, c( "ANO", "MES", "NUM_MES", "Produto", "Cliente", "Integralidade", "Canal Distribuição", "Tipo Agente",  "Apolices Emitidas", "Apolices Anuladas", "Apolices Vigentes")]
 
 # Salvar o arquivo modificado
 write_xlsx(data, output_file)
