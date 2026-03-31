@@ -4,10 +4,10 @@ library(readxl)
 library(writexl)
 
 # Diretório e nome do ficheiro original
-input_file <- "Z:/MARKET PRICING E ATUARIADO DE PRODUTO/REPORTS/RADAR MAPFRE PBI/Taxa Anulações/Report_Taxa_anulacao_Cognos_V1.xlsx"
+input_file <- "C:/Users/COSTAC3/OneDrive - MAPFRE/USGIBEPT - Atuariado-MKP-Modelos - Documentos/MARKET PRICING E ATUARIADO DE PRODUTO/REPORTS/RADAR MAPFRE PBI/Taxa Anulações/Report_Taxa_anulacao_Cognos.xlsx"
 
 # Diretório e nome do ficheiro modificado
-output_file <- "Z:/MARKET PRICING E ATUARIADO DE PRODUTO/REPORTS/RADAR MAPFRE PBI/Taxa Anulações/REPORT_TAXAS_ANULACOES.xlsx"
+output_file <- "C:/Users/COSTAC3/OneDrive - MAPFRE/USGIBEPT - Atuariado-MKP-Modelos - Documentos/MARKET PRICING E ATUARIADO DE PRODUTO/REPORTS/RADAR MAPFRE PBI/Taxa Anulações/REPORT_TAXAS_ANULACOES.xlsx"
 
 # Verificar se o arquivo original existe
 if (!file.exists(input_file)) {
